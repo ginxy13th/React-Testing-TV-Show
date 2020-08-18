@@ -1,16 +1,20 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import Episodes from '../components/Episodes';
-import { mockEpisodes } from './app.test';
-  
-test('Render episodes when data fetch is done', () => {
- const { rerender } = render(<Episodes episodes={[]}/>);
- let episodesArr = screen.queryAllByTestId(/episodes/i);
- expect(episodesArr).toHaveLength(0);
+import { mockShow } from '../fixtures/show';
 
- rerender(<Episodes episodes={mockEpisodes} />);
- episodesArr = screen.getAllByTestId(/episodes/i);
- expect(episodesArr).toHaveLength(26);
+test('renders component', () => {
+    render(<Episodes episodes={[]}/>);
 });
 
+test('component render with the data', () => {
+    const { queryAllByTestId, rerender} = render(<Episodes episodes={[]}/>)
+
+    expect(queryAllByTestId('show')).toHaveLength(0);
+    expect(queryAllByTestId('show')).toStrictEqual([]);
+
+    rerender(<Episodes episodes={mockShow}/>);
+
+    expect(queryAllByTestId('show')).toHaveLength(2);
+}) 
   
